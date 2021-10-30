@@ -212,7 +212,7 @@ else {
 }); 
 }
   });
-$('#size,#color').css({'width':document.querySelector('.textarea').clientWidth + 'px'});
+
 if (window.File && window.FileReader && window.FileList && window.Blob) {
   document.getElementById('files').addEventListener('change', handleFileSelect, false);
   //$('.progbar2').css({'width':'100%'});
@@ -239,6 +239,7 @@ function handleFileSelect(evt) {
       setTimeout(function() {
         $('.page[p="3"]').attr('d','b');
         $('.page[p="2"]').attr('d','n');
+        $('#size,#color').css({'width':document.querySelector('.textarea').clientWidth + 'px'});
       },600);
     };
   })(f);
