@@ -190,7 +190,7 @@ body {
   <div class="r">
     <div class="textarea" designMode="on" contenteditable="true"></div>
     <input type="text" placeholder="文字大小" id="size" value="20">
-    <input type="text" placeholder="文字顏色" id="color">
+    <input type="text" placeholder="文字顏色" id="color" value="#000000">
     <div class="btn sq" g="copyimg">拷貝圖片</div>
     <div class="btn sq">下載圖片</div>
    </div>
@@ -262,7 +262,7 @@ $('input[type="text"],.textarea').keyup(function() {
     });
 var container = document.getElementById("textoutput");
 function toimage() {
-  $('#textoutput').css({'font-size':$('#size').val() + 'px','line-height':parseInt($('#size').val())+10 + 'px'});
+  $('#textoutput').css({'font-size':$('#size').val() + 'px','line-height':parseInt($('#size').val())+10 + 'px','color':$('#color').val()});
   $('#textoutput').html($('.textarea').html());
   html2canvas(container, { allowTaint: true, backgroundColor: null }).then(function (canvas) {
   $('.box img').attr('src',canvas.toDataURL());
