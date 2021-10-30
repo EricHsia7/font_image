@@ -1,0 +1,309 @@
+<meta charset="UTF-8">
+<title>Font</title>
+<head>
+</head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=0" />
+<link href="https://erichsia7.github.io/colors/c2_512.png" sizes="512x512" rel="apple-touch-icon-precomposed" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="defualt" />
+<link type="image/x-icon" href="https://erichsia7.github.io/colors/c2_ico.ico" rel="icon" />
+<link type="image/x-icon" href="https://erichsia7.github.io/colors/c2_ico.ico" rel="bookmark" />
+<link type="image/x-icon" href="https://erichsia7.github.io/colors/c2_ico.ico" rel="shortcut icon" />
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://erichsia7.github.io/ripple.js/ripple.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
+<style>
+:root {
+  --main-color:#1587bf;
+  --main-color-text:#fff;
+}
+.page {
+  position:fixed;
+  top:0px;
+  left:0px;
+  width:100%;
+  height:100%;
+  background:#fff;
+}
+.page[p="1"],.page[p="2"] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction:column
+}
+.page[p="1"] p {
+  color:#888;
+  margin:0px;
+  padding:0px;
+  font-weight:400;
+}
+.page[p="1"] * {
+  font-family: 'Noto Sans TC', sans-serif;
+}
+.page[p="1"] input[type="file"] {
+  display:none;
+}
+.btn {
+  width:120px;
+  height:50px;
+  background:var(--main-color);
+  color:var(--main-color-text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size:18px;
+  border-radius:30px;
+}
+.btn[g="file"] {
+  font-weight:700;
+}
+.page[d="n"] {
+  display:none;
+}
+.page[d="f"] {
+  dispaly:flex;
+}
+.page[d="b"] {
+  dispaly:block;
+}
+.progbar {
+  background:#e3e3e3;
+  width:150px;
+  height:15px;
+  border-radius:30px;
+  position:relative;
+  overflow:hidden;
+}
+.progbar2 {
+  position:absolute;
+  top:0px;
+  left:0px;
+  min-width:15px;
+  width:10%;
+  height:15px;
+  background:var(--main-color);
+  border-radius:30px;
+  transition:0.6s;
+}
+.box {
+  position:absolute;
+  top:0px;
+  left:0px;
+  width:100%;
+  height:300px;
+  background:url(https://erichsia7.github.io/font_image/block.png);
+  background-repeat:repeat;
+  background-size:15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.box img {
+  max-width:100%;
+  max-height:100%;
+}
+.page[p="3"] {
+  overflow:scroll;
+}
+.r {
+  position:absolute;
+  top:300px;
+  left:0px;
+  width:100%;
+  height:auto;
+}
+.r .textarea {
+  width:90%;
+  height:150px;
+  padding:10px;
+  margin-left:calc(5% - 10px);
+  margin-top:10px;
+  border-radius:10px;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size:18px;
+  overflow:scroll;
+  border:1px #000 solid;
+}
+.r #size,.r #color {
+  width:90%;
+  height:20px;
+  padding:10px;
+  margin-left:calc(5% - 10px);
+  margin-top:10px;
+  border-radius:10px;
+  border:1px #000 solid;
+}
+.r input,.r .textarea {
+  -webkit-appearance:none;
+outline:none;-webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+#font {
+  
+}
+.textoutput {
+  position:fixed;
+  top:0px;
+  left:0px;
+  width:90%;
+  height:auto;
+  word-break: break-all;
+  word-wrap: break-word;
+  white-space:pre-wrap;
+  padding:5px;
+}
+canvas {
+  display:none;
+}
+body {
+  overflow:hidden;
+}
+.sq {
+  width:90%;
+  height:20px;
+  padding:10px;
+  margin-left:calc(5% - 10px);
+  margin-top:10px;
+  border-radius:10px;
+}
+</style>
+<style id="style"></style>
+<div id="textoutput" style="font-family: font;font-size:20px;line-height:20px;"></div>
+<div class="page" p="1">
+  <label for="files">
+<div class="btn" g="file">選擇檔案</div>
+<input type="file" id="files" name="files" accept=".ttf" />
+</label>
+  <p>*僅支援TrueType</p>
+</div>
+
+<div class="page" p="2" d="n">
+  <p>載入中</p>
+  <div class="progbar">
+    <div class="progbar2"></div>
+  </div>
+</div>
+
+<div class="page" p="3" d="n">
+  <div class="box">&nbsp<img class="fimg"></div>
+  <div class="r">
+    <div class="textarea" designMode="on" contenteditable="true"></div>
+    <input type="text" placeholder="文字大小" id="size" value="20">
+    <input type="text" placeholder="文字顏色" id="color">
+    <div class="btn sq" g="copyimg">拷貝圖片</div>
+    <div class="btn sq">下載圖片</div>
+   </div>
+</div>
+<script>
+ripple('.btn','var(--main-color-text)','0.3',1200,'true');
+  $(document).ready(function() {    if(localStorage.getItem('googlefontNotoSansTCloaded') === '1') {
+  $('body').append('<style>' + localStorage.getItem('googlefontNotoSansTC') + '</style>');
+  console.log('loaded')
+}
+else {
+ $.ajax({type:'get',url:"https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap",dataType:'text',success:function(e) {
+  
+  localStorage.setItem('googlefontNotoSansTC', e); localStorage.setItem('googlefontNotoSansTCloaded', '1');
+   $('body').append('<style>' + e + '</style>');
+   
+   console.log('loaded2')
+   }
+}); 
+}
+  });
+
+if (window.File && window.FileReader && window.FileList && window.Blob) {
+  document.getElementById('files').addEventListener('change', handleFileSelect, false);
+  //$('.progbar2').css({'width':'100%'});
+} else {
+  alert('No Support.');
+}
+
+function handleFileSelect(evt) {
+  $('.page[p="2"]').attr('d','f');
+  $('.page[p="1"]').attr('d','n');
+  var f = evt.target.files[0]; // FileList object
+  var reader = new FileReader();
+  // Closure to capture the file information.
+  reader.onload = (function(theFile) {
+    return function(e) {
+      var binaryData = e.target.result;
+      //Converting Binary Data to base 64
+      var bebloburl = URL.createObjectURL(f) ;
+      //showing file converted to base64
+      
+      
+      $('.progbar2').css({'width':'100%'});
+      $('#style').html('@font-face {font-family: font;src: url(' + bebloburl + ');font-display：swap;}');
+      setTimeout(function() {
+        $('.page[p="3"]').attr('d','b');
+        $('.page[p="2"]').attr('d','n');
+      },600);
+    };
+  })(f);
+  // Read in the image file as a data URL.
+  reader.readAsBinaryString(f);
+}
+
+var dr = '0' ;
+document.addEventListener("paste", function (e){
+    dr = '1'
+  });
+document.addEventListener("cut", function (e){
+    dr = '1'
+  });
+document.addEventListener("selectionchange", function (e){
+    dr = '1'
+  });
+$('input[type="text"],.textarea').keyup(function() {
+      dr = '1'
+    });
+var container = document.getElementById("textoutput");
+function toimage() {
+  $('#textoutput').css({'font-size':$('#size').val() + 'px','line-height':parseInt($('#size').val())+10 + 'px'});
+  $('#textoutput').html($('.textarea').html());
+  html2canvas(container, { allowTaint: true, backgroundColor: null }).then(function (canvas) {
+  $('.box img').attr('src',canvas.toDataURL());
+            });
+}
+var up = setInterval(function() {
+  if(dr === '1') {
+    toimage()
+    dr = '0' ;
+  }
+},500);
+
+function copyimage() {
+  clearInterval(up);
+  var imageElem = document.querySelector('.fimg');  
+  var range = document.createRange();  
+  range.selectNode(imageElem);  
+  window.getSelection().addRange(range);  
+
+  try {  
+    // Now that we've selected the anchor text, execute the copy command  
+    var successful = document.execCommand('copy');  
+    var msg = successful ? 'successful' : 'unsuccessful';  
+    console.log('Copy image command was ' + msg);  
+  } catch(err) {  
+    console.log('Oops, unable to copy');  
+  }  
+
+  // Remove the selections - NOTE: Should use
+  // removeRange(range) when it is supported  
+  window.getSelection().removeAllRanges();
+  
+  var up = setInterval(function() {
+  if(dr === '1') {
+    toimage()
+    dr = '0' ;
+  }
+},500);
+  
+  
+}
+$('.btn[g="copyimg"]').click(function() {
+  copyimage()
+})
+</script>
