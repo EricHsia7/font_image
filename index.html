@@ -385,4 +385,7 @@ $('.btn[g="copyimg"]').click(function() {
 $('.btn[g="downloadimg"]').click(function() {
   downloadimage()
 })
+$(window).resize(function() {
+$('#size,#color').css({'width':document.querySelector('.textarea').clientWidth + 'px'});
+});
 </script>
