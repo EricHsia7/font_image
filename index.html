@@ -192,7 +192,7 @@ body {
     <input type="text" placeholder="文字大小" id="size" value="20">
     <input type="text" placeholder="文字顏色" id="color" value="#000000">
     <div class="btn sq" g="copyimg">拷貝圖片</div>
-    <div class="btn sq">下載圖片</div>
+    <div class="btn sq" g="downloadimg">下載圖片</div>
    </div>
 </div>
 <script>
@@ -381,5 +381,8 @@ link.remove();
 }
 $('.btn[g="copyimg"]').click(function() {
   copyimage()
+})
+$('.btn[g="downloadimg"]').click(function() {
+  downloadimage()
 })
 </script>
