@@ -193,6 +193,7 @@ body {
     <input type="text" placeholder="文字顏色" id="color" value="#000000">
     <div class="btn sq" g="copyimg">拷貝圖片</div>
     <div class="btn sq" g="downloadimg">下載圖片</div>
+    <div class="btn sq" g="changefont">更改字體</div>
    </div>
 </div>
 <script>
@@ -385,6 +386,15 @@ $('.btn[g="copyimg"]').click(function() {
 $('.btn[g="downloadimg"]').click(function() {
   downloadimage()
 })
+$('.btn[g="changefont"]').click(function() {
+  if(url_pwa === "1") {
+	location.replace('https://erichsia7.github.io/font_image/?pwa=1&r=1&re=' + genid('uuid'));
+	}
+	else {
+	location.replace('https://erichsia7.github.io/font_image/?r=1&re=' + genid('uuid'));
+	}
+})
+	
 $(window).resize(function() {
 $('#size,#color').css({'width':'calc(100% - 20px)'});
 });
