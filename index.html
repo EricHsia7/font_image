@@ -370,6 +370,15 @@ function copyimage() {
   
   
 }
+function downloadimage() {
+var link = document.createElement("a");
+document.body.appendChild(link);
+link.download = "image.png";
+link.href = $('.box img').attr('src');
+link.target = '_blank';
+link.click();
+link.remove();
+}
 $('.btn[g="copyimg"]').click(function() {
   copyimage()
 })
